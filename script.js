@@ -11,6 +11,9 @@ window.onload = function() {
     const decodedDiv2 = document.getElementById('decodedNumber2');
     const label2 = document.getElementById('label2');
     const etsyLink = document.querySelector('footer a');
+    const contactCard = document.getElementById('contact-card');
+    const noPhoneMessage = document.getElementById('no-phone-message');
+    const etsyListingLink = document.getElementById('etsy-listing-link');
 
     function addPhoneLinkListener(linkElement, eventName) {
         linkElement.addEventListener('click', function() {
@@ -30,7 +33,8 @@ window.onload = function() {
             decodedDiv1.innerHTML = `<p>Error: Invalid phone number format.</p>`;
         }
     } else {
-        decodedDiv1.innerHTML = `<p>No phone number found.</p>`;
+        contactCard.style.display = 'none';
+        noPhoneMessage.style.display = 'block';
     }
 
     if (encodedNumber2) {
@@ -50,6 +54,13 @@ window.onload = function() {
         gtag('event', 'click_etsy_link', {
             'event_category': 'engagement',
             'event_label': 'etsy_link'
+        });
+    });
+
+    etsyListingLink.addEventListener('click', function() {
+        gtag('event', 'click_etsy_listing_link', {
+            'event_category': 'engagement',
+            'event_label': 'etsy_listing_link'
         });
     });
 };
