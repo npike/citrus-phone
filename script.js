@@ -15,6 +15,15 @@ window.onload = function() {
     const noPhoneMessage = document.getElementById('no-phone-message');
     const etsyListingLink = document.getElementById('etsy-listing-link');
 
+    function formatPhoneNumber(phoneNumber) {
+        const cleaned = ('' + phoneNumber).replace(/\D/g, '');
+        const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+        if (match) {
+            return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+        }
+        return phoneNumber;
+    }
+
     function addPhoneLinkListener(linkElement, eventName) {
         linkElement.addEventListener('click', function() {
             gtag('event', eventName, {
@@ -26,8 +35,10 @@ window.onload = function() {
 
     if (encodedNumber1) {
         try {
-            const phoneNumber = atob(encodedNumber1);
-            decodedDiv1.innerHTML = `<a href="tel:${phoneNumber}" id="phoneLink1">${phoneNumber}</a>`;
+            const decodedNumber = atob(encodedNumber1);
+            const strippedNumber = decodedNumber.replace(/\D/g, '');
+            const formattedNumber = formatPhoneNumber(strippedNumber);
+            decodedDiv1.innerHTML = `<a href="tel:${strippedNumber}" id="phoneLink1">${formattedNumber}</a>`;
             addPhoneLinkListener(document.getElementById('phoneLink1'), 'click_phone_link_1');
         } catch (e) {
             decodedDiv1.innerHTML = `<p>Error: Invalid phone number format.</p>`;
@@ -39,8 +50,10 @@ window.onload = function() {
 
     if (encodedNumber2) {
         try {
-            const phoneNumber = atob(encodedNumber2);
-            decodedDiv2.innerHTML = `<a href="tel:${phoneNumber}" id="phoneLink2">${phoneNumber}</a>`;
+            const decodedNumber = atob(encodedNumber2);
+            const strippedNumber = decodedNumber.replace(/\D/g, '');
+            const formattedNumber = formatPhoneNumber(strippedNumber);
+            decodedDiv2.innerHTML = `<a href="tel:${strippedNumber}" id="phoneLink2">${formattedNumber}</a>`;
             addPhoneLinkListener(document.getElementById('phoneLink2'), 'click_phone_link_2');
         } catch (e) {
             decodedDiv2.innerHTML = `<p>Error: Invalid phone number format.</p>`;
